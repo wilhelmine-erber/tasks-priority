@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useState, useEffect } from 'react'
 import Listitems from './Listitems';
 
 function Tasks() {
@@ -43,6 +43,14 @@ function Tasks() {
 
     // https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/25890188#overview
     // TODO: save to Database
+
+    useEffect(()=>{
+        fetch('http://localhost:3000/api/todos')
+            .then((response) => response.json())
+            .then((data) => {
+                setTodos(data)
+            })
+    }, [])
 
     return (
         <div className='flex flex-col items-center'>
