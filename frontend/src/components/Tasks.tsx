@@ -1,5 +1,7 @@
 import React, { FormEvent, useState, useEffect } from 'react'
 import Listitems from './Listitems';
+import { createTodo } from '../services/todo';
+import { ITodo } from '../services/todo';
 
 function Tasks() {
 
@@ -25,13 +27,20 @@ function Tasks() {
             return
         }
 
-        setTodos([...todos, { _id: new Date().toISOString(), todo: task, priority: priority, done: false }])
+        // todo in funktion für backend und im state speichern
+        // createTodo
+        createTodo({
+            _id: new Date().toISOString(), todo: task, priority: priority, done: done
+        })
+
+        setTodos([...todos, { _id: new Date().toISOString(), todo: task, priority: priority, done: done }])
 
         setTask('')
         setPriority('')
     }
 
     const toggleDone = (_id: string) => {
+        // alle todos durchlaufen, wenn id übereintimmt, dann wird toggle umgekehrt
         setTodos(prev => prev.map(todo => todo._id === _id ? { ...todo, done: !todo.done } : todo))
     }
 
@@ -41,10 +50,7 @@ function Tasks() {
     }
 
 
-    // https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/25890188#overview
-    // TODO: save to Database
-
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:3000/api/todos')
             .then((response) => response.json())
             .then((data) => {
