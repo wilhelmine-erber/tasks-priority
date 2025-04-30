@@ -31,3 +31,17 @@ export async function createTodo(todo: ITodo){
 }
 
 
+// delete todo
+export async function deleteTodo(id: string) {
+    console.log('id', id);
+    try{
+        const res = await fetch(`${BASE_URL}/${id}`, {
+            method: 'DELETE',
+        });
+        return res.ok;
+
+    } catch (error) {
+        console.error('Error deleting todo:', error);
+        throw new Error('Failed to delete todo');
+    }
+}

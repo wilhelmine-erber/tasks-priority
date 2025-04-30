@@ -49,7 +49,25 @@ app.post('/api/todos', async (req: Request, res: Response, next:NextFunction) =>
 // PUT /api/todos/:id => Todo aktualisieren
 
 // DELETE /api/todos/:id => Todo löschen
+app.delete('/api/todos/:id', async (req: Request, res: Response) => {
 
+    const id = req.params.id
+    
+    try {
+        const result = await pool.query('DELETE FROM todos WHERE _id = $1 RETURNING *', [id])
+
+        const newTodo = result.rows[0]
+        console.log('newTodo', newTodo);
+        // if(result.rowCount === 0) {
+        //     return res.status(404).json({error: 'Todo nicht gefunden.'})
+        // }
+
+        res.json({message: 'Todo gelöscht.'})
+    } catch (error) {
+        console.error('Error deleting todo:', error)
+        res.status(500).json({error: 'Fehler beim Löschen des Todos.'})
+    }
+})
 
 
 

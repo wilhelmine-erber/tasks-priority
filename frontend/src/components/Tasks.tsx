@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useEffect } from 'react'
 import Listitems from './Listitems';
-import { createTodo } from '../services/todo';
+import { createTodo, deleteTodo } from '../services/todo';
 import { ITodo } from '../services/todo';
 
 function Tasks() {
@@ -36,6 +36,8 @@ function Tasks() {
         setTodos([...todos, { _id: new Date().toISOString(), todo: task, priority: priority, done: done }])
 
         setTask('')
+
+
         setPriority('')
     }
 
@@ -45,7 +47,8 @@ function Tasks() {
     }
 
 
-    function deleteTodo(_id: string): void {
+    function handleDeleteTodo(_id: string): void {
+        deleteTodo(_id)
         setTodos(prev => prev.filter(todo => todo._id !== _id))
     }
 
@@ -96,7 +99,7 @@ function Tasks() {
                         <Listitems
                             key={todo._id}
                             todo={todo}
-                            deleteTodo={deleteTodo}
+                            handleDeleteTodo={handleDeleteTodo}
                             toggleDone={toggleDone}
                         />
                     ))}

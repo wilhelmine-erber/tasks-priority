@@ -9,11 +9,11 @@ type todo = {
 
 type ListitemsProps = {
     todo: todo,
-    deleteTodo: (_id: string) => void,
+    handleDeleteTodo: (_id: string) => void,
     toggleDone: (_id:string) => void
 };
 
-function Listitems({todo, deleteTodo, toggleDone}: ListitemsProps) {
+function Listitems({todo, handleDeleteTodo, toggleDone}: ListitemsProps) {
     
 
     return (
@@ -26,7 +26,7 @@ function Listitems({todo, deleteTodo, toggleDone}: ListitemsProps) {
                 <button className="btn btn-square btn-ghost" onClick={() => toggleDone(todo._id)}>
                     <SquareCheckBig className='size-5' />
                 </button>
-                <button className="btn btn-square btn-ghost" onClick={() => deleteTodo(todo._id)}>
+                <button className="btn btn-square btn-ghost" onClick={() => handleDeleteTodo(todo._id)}>
                     <Trash2 className='size-5' />
                 </button>
             </div>
